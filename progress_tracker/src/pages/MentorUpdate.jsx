@@ -1,14 +1,21 @@
+
 import React, { useState } from "react";
 
 const beltLevels = ["Purple", "Blue", "Brown", "General"];
 
 const MentorUpdate = () => {
   const mentorName = localStorage.getItem("mentorName") || "Mentor";
-  const [questions, setQuestions] = useState({
-    Purple: Array(5).fill(""),
-    Blue: Array(5).fill(""),
-    Brown: Array(5).fill(""),
-    General: Array(5).fill(""),
+  const [questions, setQuestions] = useState(() => {
+    // Load existing questions from localStorage if available
+    const saved = localStorage.getItem("beltQuestions");
+    return saved
+      ? JSON.parse(saved)
+      : {
+          Purple: Array(5).fill(""),
+          Blue: Array(5).fill(""),
+          Brown: Array(5).fill(""),
+          General: Array(5).fill(""),
+        };
   });
 
   const handleChange = (belt, index, value) => {
@@ -19,8 +26,8 @@ const MentorUpdate = () => {
   };
 
   const handleSave = () => {
-    console.log("Updated Questions:", questions);
-    alert("✅ Questions updated successfully!");
+    localStorage.setItem("beltQuestions", JSON.stringify(questions));
+    alert("✅ Questions updated successfully! Students can now see them.");
   };
 
   return (
@@ -30,22 +37,20 @@ const MentorUpdate = () => {
           Welcome, {mentorName} 👋
         </h1>
         <p className="text-center text-gray-700 mb-8">
-          Update 5 questions for each belt level below. Please ensure your
-          questions are clear and relevant to each skill level.
+          Update 5 LeetCode question links for each belt level below.
         </p>
 
-        {/* Belt sections */}
         {beltLevels.map((belt) => (
           <div key={belt} className="mb-10">
             <h2 className="text-xl font-semibold text-red-600 mb-3 border-b-2 border-red-200 pb-1">
-              {belt} Belt Questions
+              {belt} Belt Questions (LeetCode links)
             </h2>
             <div className="space-y-3">
               {questions[belt].map((q, index) => (
                 <input
                   key={index}
                   type="text"
-                  placeholder={`Question ${index + 1}`}
+                  placeholder={`Question ${index + 1} Link`}
                   value={q}
                   onChange={(e) => handleChange(belt, index, e.target.value)}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-400"
@@ -55,13 +60,12 @@ const MentorUpdate = () => {
           </div>
         ))}
 
-        {/* Save Button */}
         <div className="text-center">
           <button
             onClick={handleSave}
             className="bg-red-500 text-white py-2.5 px-8 rounded-lg font-medium hover:bg-red-600 transition shadow-md"
           >
-            Save All Questions
+            Update Questions
           </button>
         </div>
       </div>

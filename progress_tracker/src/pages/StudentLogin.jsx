@@ -36,7 +36,7 @@ const StudentLogin = () => {
       setMessage("✅ Login successful! Redirecting to dashboard...");
 
       setTimeout(() => {
-        navigate("/student-dashboard"); 
+        navigate("/student-work"); 
       }, 1500);
     } catch (err) {
       setError("Server error. Try again later.");
