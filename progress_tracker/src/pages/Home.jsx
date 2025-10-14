@@ -1,4 +1,6 @@
 
+
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { User, Code, TrendingUp, Users, Heart } from "lucide-react";
@@ -28,13 +30,16 @@ const Home = () => {
           </h1>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            {/* Student Login (you can add later) */}
-            <button className="flex items-center gap-2 bg-red-500 text-white px-5 py-2.5 rounded-full font-medium shadow-md hover:bg-red-600 transition">
+            {/* Student Login */}
+            <button
+              onClick={() => navigate("/student-login")}
+              className="flex items-center gap-2 bg-red-500 text-white px-5 py-2.5 rounded-full font-medium shadow-md hover:bg-red-600 transition"
+            >
               <User size={18} />
               Login as Student
             </button>
 
-            {/* Mentor Login navigates to MentorLogin.jsx */}
+            {/* Mentor Login */}
             <button
               onClick={() => navigate("/mentor-login")}
               className="flex items-center gap-2 bg-white text-red-500 px-5 py-2.5 rounded-full font-medium shadow-md hover:bg-gray-100 transition"
@@ -48,7 +53,6 @@ const Home = () => {
 
       {/* Track Coding Journey Section */}
       <section className="flex flex-col md:flex-row items-center justify-between gap-10 bg-gray-50 p-10 rounded-3xl shadow-md mx-6 my-10">
-        {/* Left Content */}
         <div className="flex-1 text-gray-700 space-y-4">
           <h2 className="text-xl font-semibold text-gray-900">
             Track Your Coding Journey
@@ -83,7 +87,6 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Right Image */}
         <div className="flex-1 flex justify-center">
           <img
             src={codingImage}
@@ -93,7 +96,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Footer Section */}
+      {/* Footer */}
       <footer className="bg-gray-100 text-center py-8 rounded-t-3xl shadow-inner">
         <h3 className="text-lg font-semibold text-gray-800">
           Created by <span className="text-red-500">Kabir Dharshaan</span>, Kalvium Squad 81

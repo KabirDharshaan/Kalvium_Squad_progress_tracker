@@ -1,3 +1,6 @@
+
+
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -11,14 +14,17 @@ app.use(express.json());
 
 // Routes
 const mentorRoutes = require("./routes/mentor");
-app.use("/api/mentor", mentorRoutes);
+const studentRoutes = require("./routes/studentRoutes"); 
 
-// Connect to MongoDB
+app.use("/api/mentor", mentorRoutes);
+app.use("/api/student", studentRoutes); 
+
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log("MongoDB connection error:", err));
 
-// Start server
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
