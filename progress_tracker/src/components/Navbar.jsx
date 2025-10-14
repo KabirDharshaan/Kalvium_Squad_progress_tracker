@@ -1,6 +1,6 @@
 
-
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Home,
   Users,
@@ -16,21 +16,28 @@ import kalviumLogo from "../assets/fav.png";
 const Navbar = () => {
   const [active, setActive] = useState("Home");
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate(); 
 
   const navItems = [
-    { name: "Home", icon: <Home size={20} /> },
-    { name: "Students", icon: <Users size={20} /> },
-    { name: "Dashboard", icon: <LayoutDashboard size={20} /> },
-    { name: "Statistics", icon: <BarChart size={20} /> },
-    { name: "Proof", icon: <FileCheck size={20} /> },
-    { name: "About", icon: <Info size={20} /> },
+    { name: "Home", icon: <Home size={20} />, path: "/" },
+    { name: "Students", icon: <Users size={20} />, path: "/students" },
+    { name: "Dashboard", icon: <LayoutDashboard size={20} />, path: "/dashboard" },
+    { name: "Statistics", icon: <BarChart size={20} />, path: "/statistics" },
+    { name: "Proof", icon: <FileCheck size={20} />, path: "/proof" },
+    { name: "About", icon: <Info size={20} />, path: "/about" },
   ];
+
+  const handleNavigation = (item) => {
+    setActive(item.name);
+    navigate(item.path); 
+    setMenuOpen(false);
+  };
 
   return (
     <nav className="bg-white shadow-md px-6 py-3">
       <div className="flex justify-between items-center">
         {/* Left - Logo */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3 cursor-pointer" onClick={() => handleNavigation(navItems[0])}>
           <img src={kalviumLogo} alt="Kalvium Logo" className="w-10 h-10" />
           <h1 className="text-xl font-semibold text-gray-800">Kalvium</h1>
         </div>
@@ -45,7 +52,7 @@ const Navbar = () => {
                   ? "text-red-500 font-semibold"
                   : "text-gray-700 hover:text-red-400"
               }`}
-              onClick={() => setActive(item.name)}
+              onClick={() => handleNavigation(item)}
             >
               {item.icon}
               <span>{item.name}</span>
@@ -74,10 +81,7 @@ const Navbar = () => {
                     ? "text-red-500 font-semibold"
                     : "text-gray-700 hover:text-red-400"
                 }`}
-                onClick={() => {
-                  setActive(item.name);
-                  setMenuOpen(false);
-                }}
+                onClick={() => handleNavigation(item)}
               >
                 {item.icon}
                 <span>{item.name}</span>
