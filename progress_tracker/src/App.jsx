@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import MentorLogin from "./pages/MentorLogin";
 import MentorSignup from "./pages/MentorSignup";
+import MentorUpdate from "./pages/MentorUpdate";
 
 function App() {
   return (
@@ -12,14 +13,15 @@ function App() {
       <div>
         <Navbar />
         <Routes>
-          
+         
           <Route path="/" element={<Home />} />
 
          
           <Route path="/mentor-login" element={<MentorLogin />} />
+          <Route path="/mentor-signup" element={<MentorSignup />} />
 
          
-          <Route path="/mentor-signup" element={<MentorSignup />} />
+          <Route path="/mentor-update" element={<MentorUpdate />} />
         </Routes>
       </div>
     </Router>
@@ -27,10 +29,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
-
-
-

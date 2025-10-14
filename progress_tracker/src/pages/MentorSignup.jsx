@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { User, Mail, Lock, UserPlus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -6,25 +7,53 @@ const MentorSignup = () => {
   const [name, setName] = useState("");
   const [communityEmail, setCommunityEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState(""); 
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    console.log("Mentor signup:", { name, communityEmail, password });
-    
+    setError("");
+    setMessage("");
+
+    try {
+      const res = await fetch("http://localhost:5000/api/mentor/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email: communityEmail, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message || "Signup failed");
+        return;
+      }
+
+      // Success message
+      setMessage("Successfully signed up! Redirecting to login...");
+
+      // Optional: wait 2 seconds and redirect to login
+      setTimeout(() => {
+        navigate("/mentor-login");
+      }, 2000);
+    } catch (err) {
+      setError("Server error. Try again later.");
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-red-50">
       <div className="bg-white shadow-lg rounded-2xl p-8 w-[90%] max-w-md border border-red-100">
-        {/* Title */}
         <h2 className="text-2xl font-semibold text-center text-red-500 mb-6">
           Mentor Signup
         </h2>
 
-        {/* Form */}
+        {/* Show success or error messages */}
+        {message && <p className="text-green-500 text-sm mb-3">{message}</p>}
+        {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+
         <form onSubmit={handleSignup} className="space-y-5">
-          {/* Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Full Name
@@ -42,7 +71,6 @@ const MentorSignup = () => {
             </div>
           </div>
 
-          {/* Community Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Community Email
@@ -60,7 +88,6 @@ const MentorSignup = () => {
             </div>
           </div>
 
-          {/* Password */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Password
@@ -78,7 +105,6 @@ const MentorSignup = () => {
             </div>
           </div>
 
-          {/* Signup Button */}
           <button
             type="submit"
             className="w-full bg-red-500 text-white py-2.5 rounded-lg font-medium hover:bg-red-600 transition flex items-center justify-center gap-2"
@@ -88,7 +114,6 @@ const MentorSignup = () => {
           </button>
         </form>
 
-        {/* Redirect to Login */}
         <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{" "}
           <button
@@ -99,10 +124,8 @@ const MentorSignup = () => {
           </button>
         </p>
 
-        {/* Footer */}
         <p className="text-center text-sm text-gray-500 mt-4">
-          Made with ❤️ by{" "}
-          <span className="text-red-500 font-medium">Kabir Dharshaan</span>
+          Made with ❤️ by <span className="text-red-500 font-medium">Kabir Dharshaan</span>
         </p>
       </div>
     </div>

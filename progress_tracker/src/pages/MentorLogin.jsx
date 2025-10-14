@@ -1,3 +1,5 @@
+
+
 import React, { useState } from "react";
 import { Mail, Lock, LogIn } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -5,25 +7,55 @@ import { useNavigate } from "react-router-dom";
 const MentorLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); 
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState(""); 
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Mentor login:", { email, password });
-    // Add your authentication logic here
+    setError("");
+    setMessage("");
+
+    try {
+      const res = await fetch("http://localhost:5000/api/mentor/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message || "Login failed");
+        return;
+      }
+
+      localStorage.setItem("mentorToken", data.token);
+      localStorage.setItem("mentorName", data.mentor.name);
+
+      setMessage("Login successful! Redirecting to update page...");
+
+    
+      setTimeout(() => {
+        navigate("/mentor-update");
+      }, 1500);
+    } catch (err) {
+      setError("Server error. Try again later.");
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-red-50">
       <div className="bg-white shadow-lg rounded-2xl p-8 w-[90%] max-w-md border border-red-100">
-        {/* Title */}
         <h2 className="text-2xl font-semibold text-center text-red-500 mb-6">
           Mentor Login
         </h2>
 
-        {/* Form */}
+        
+        {message && <p className="text-green-500 text-sm mb-3">{message}</p>}
+        {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+
         <form onSubmit={handleLogin} className="space-y-5">
-          {/* Email Input */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Email Address
@@ -41,7 +73,6 @@ const MentorLogin = () => {
             </div>
           </div>
 
-          {/* Password Input */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Password
@@ -59,7 +90,6 @@ const MentorLogin = () => {
             </div>
           </div>
 
-          {/* Login Button */}
           <button
             type="submit"
             className="w-full bg-red-500 text-white py-2.5 rounded-lg font-medium hover:bg-red-600 transition flex items-center justify-center gap-2"
@@ -69,7 +99,6 @@ const MentorLogin = () => {
           </button>
         </form>
 
-        {/* Signup Redirect */}
         <p className="text-center text-sm text-gray-600 mt-6">
           Don’t have an account?{" "}
           <button
@@ -80,10 +109,8 @@ const MentorLogin = () => {
           </button>
         </p>
 
-        {/* Footer */}
         <p className="text-center text-sm text-gray-500 mt-4">
-          Made with ❤️ by{" "}
-          <span className="text-red-500 font-medium">Kabir Dharshaan</span>
+          Made with ❤️ by <span className="text-red-500 font-medium">Kabir Dharshaan</span>
         </p>
       </div>
     </div>
