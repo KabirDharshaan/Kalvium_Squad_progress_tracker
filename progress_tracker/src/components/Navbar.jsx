@@ -20,7 +20,7 @@ const Navbar = () => {
 
   const navItems = [
     { name: "Home", icon: <Home size={20} />, path: "/" },
-    { name: "Students", icon: <Users size={20} />, path: "/students" },
+    { name: "Students", icon: <Users size={20} />, path: "/student-dashboard" },
     { name: "Dashboard", icon: <LayoutDashboard size={20} />, path: "/dashboard" },
     { name: "Statistics", icon: <BarChart size={20} />, path: "/statistics" },
     { name: "Proof", icon: <FileCheck size={20} />, path: "/proof" },

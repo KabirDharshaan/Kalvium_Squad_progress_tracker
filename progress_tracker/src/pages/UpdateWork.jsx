@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -7,11 +6,13 @@ const beltLevels = ["Purple", "Blue", "Brown", "General"];
 const UpdateWork = () => {
   const navigate = useNavigate();
   const studentName = localStorage.getItem("studentName") || "Student";
+  const squadNo = localStorage.getItem("squadNo") || "Unknown Squad";
 
   const [selectedBelt, setSelectedBelt] = useState("Purple");
   const [questionsSolved, setQuestionsSolved] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     if (!questionsSolved) {
       alert("⚠️ Please enter how many questions you solved.");
       return;
@@ -19,26 +20,37 @@ const UpdateWork = () => {
 
     const today = new Date().toLocaleDateString();
 
-    
-    const progressData = JSON.parse(localStorage.getItem("workProgress") || "{}");
-
-    const updatedData = {
-      ...progressData,
-      [studentName]: {
-        ...(progressData[studentName] || {}),
-        [today]: {
-          belt: selectedBelt,
-          solved: questionsSolved,
-        },
-      },
+    const progressData = {
+      studentName,
+      squadNo,
+      belt: selectedBelt,
+      solved: questionsSolved,
+      date: today,
     };
 
-    localStorage.setItem("workProgress", JSON.stringify(updatedData));
-    alert("✅ Progress updated successfully!");
-    setQuestionsSolved("");
+    try {
+      setLoading(true);
+      const response = await fetch("http://localhost:5000/api/work/update", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(progressData),
+      });
 
-    
-    navigate("/student-work");
+      const data = await response.json();
+      setLoading(false);
+
+      if (response.ok) {
+        alert("✅ Progress updated successfully!");
+        setQuestionsSolved("");
+        navigate("/student-work");
+      } else {
+        alert(`❌ Failed to update: ${data.message}`);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error("Error updating progress:", error);
+      alert("⚠️ Server error. Please try again later.");
+    }
   };
 
   return (
@@ -49,7 +61,10 @@ const UpdateWork = () => {
         </h1>
 
         <p className="text-center text-gray-600 mb-6">
-          Hello, <span className="font-medium text-red-500">{studentName}</span>!  
+          Hello, <span className="font-medium text-red-500">{studentName}</span>!
+          <br />
+          (Squad: <span className="text-gray-700 font-medium">{squadNo}</span>)
+          <br />
           Select your belt level and update your solved question count for today.
         </p>
 
@@ -89,9 +104,14 @@ const UpdateWork = () => {
         {/* Update Button */}
         <button
           onClick={handleUpdate}
-          className="w-full bg-red-500 text-white py-2.5 rounded-lg font-medium hover:bg-red-600 transition shadow-md"
+          disabled={loading}
+          className={`w-full py-2.5 rounded-lg font-medium transition shadow-md ${
+            loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-red-500 text-white hover:bg-red-600"
+          }`}
         >
-          Update Progress
+          {loading ? "Updating..." : "Update Progress"}
         </button>
       </div>
 
@@ -104,4 +124,3 @@ const UpdateWork = () => {
 };
 
 export default UpdateWork;
-

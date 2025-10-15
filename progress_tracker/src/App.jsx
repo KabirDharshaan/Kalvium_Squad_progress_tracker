@@ -5,16 +5,15 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import About from "./pages/About";
 
-
 import MentorLogin from "./pages/MentorLogin";
 import MentorSignup from "./pages/MentorSignup";
 import MentorUpdate from "./pages/MentorUpdate";
-
 
 import StudentLogin from "./pages/StudentLogin";
 import StudentSignup from "./pages/StudentSignup";
 import StudentWork from "./pages/StudentWork";
 import UpdateWork from "./pages/UpdateWork";
+import StudentDashboard from "./pages/StudentDashboard"; 
 
 function App() {
   return (
@@ -37,7 +36,8 @@ function App() {
           <Route path="/student-login" element={<StudentLogin />} />
           <Route path="/student-signup" element={<StudentSignup />} />
           <Route path="/student-work" element={<StudentWork />} />
-          <Route path="/update-work" element={<UpdateWork />} /> {/* ✅ New Route */}
+          <Route path="/update-work" element={<UpdateWork />} />
+          <Route path="/student-dashboard" element={<StudentDashboard />} /> 
         </Routes>
       </div>
     </Router>
@@ -45,4 +45,3 @@ function App() {
 }
 
 export default App;
-
