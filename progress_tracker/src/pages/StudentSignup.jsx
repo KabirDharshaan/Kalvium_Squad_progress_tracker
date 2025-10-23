@@ -1,13 +1,12 @@
-
-
 import React, { useState } from "react";
-import { User, Mail, Lock, UserPlus } from "lucide-react";
+import { User, Mail, Lock, UserPlus, Hash } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const StudentSignup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [squadNo, setSquadNo] = useState(""); 
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -21,7 +20,7 @@ const StudentSignup = () => {
       const res = await fetch("http://localhost:5000/api/student/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password, squadNo: Number(squadNo) }),
       });
 
       const data = await res.json();
@@ -96,6 +95,24 @@ const StudentSignup = () => {
                 placeholder="Create a password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full outline-none text-gray-700 bg-transparent"
+              />
+            </div>
+          </div>
+
+          {/* New Squad Number field */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Squad Number
+            </label>
+            <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 focus-within:border-red-400">
+              <Hash size={18} className="text-gray-400 mr-2" />
+              <input
+                type="number"
+                placeholder="Enter your squad number"
+                value={squadNo}
+                onChange={(e) => setSquadNo(e.target.value)}
                 required
                 className="w-full outline-none text-gray-700 bg-transparent"
               />

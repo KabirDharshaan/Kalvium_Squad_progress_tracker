@@ -5,9 +5,10 @@ const beltLevels = ["Purple", "Blue", "Brown", "General"];
 
 const MentorUpdate = () => {
   const mentorName = localStorage.getItem("mentorName") || "Mentor";
+  const mentorSquad = localStorage.getItem("mentorSquad") || "unknown";
+
   const [questions, setQuestions] = useState(() => {
-    // Load existing questions from localStorage if available
-    const saved = localStorage.getItem("beltQuestions");
+    const saved = localStorage.getItem(`beltQuestions_squad_${mentorSquad}`);
     return saved
       ? JSON.parse(saved)
       : {
@@ -26,8 +27,13 @@ const MentorUpdate = () => {
   };
 
   const handleSave = () => {
-    localStorage.setItem("beltQuestions", JSON.stringify(questions));
-    alert("✅ Questions updated successfully! Students can now see them.");
+    localStorage.setItem(
+      `beltQuestions_squad_${mentorSquad}`,
+      JSON.stringify(questions)
+    );
+    alert(
+      `✅ Questions updated successfully! Only squad ${mentorSquad} members can access them.`
+    );
   };
 
   return (
@@ -37,7 +43,7 @@ const MentorUpdate = () => {
           Welcome, {mentorName} 👋
         </h1>
         <p className="text-center text-gray-700 mb-8">
-          Update 5 LeetCode question links for each belt level below.
+          Update 5 LeetCode question links for each belt level below. Only squad {mentorSquad} will see these questions.
         </p>
 
         {beltLevels.map((belt) => (

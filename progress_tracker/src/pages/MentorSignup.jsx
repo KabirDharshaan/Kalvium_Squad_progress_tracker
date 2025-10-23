@@ -124,12 +124,15 @@ const MentorSignup = () => {
           </button>
         </p>
 
-        <p className="text-center text-sm text-gray-500 mt-4">
-          Made with ❤️ by <span className="text-red-500 font-medium">Kabir Dharshaan</span>
-        </p>
+       
       </div>
     </div>
   );
 };
 
 export default MentorSignup;
+
+
+
+
+

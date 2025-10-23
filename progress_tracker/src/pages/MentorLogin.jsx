@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import { Mail, Lock, LogIn } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -11,37 +9,39 @@ const MentorLogin = () => {
   const [message, setMessage] = useState(""); 
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  // Hardcoded allowed mentors with squads
+  const allowedMentors = [
+    { email: "ajay.balasubramaniam@kalvium.community", password: "ajay@kalvium", name: "Ajay Balasubramaniam" },
+    { email: "sourabh.kt@kalvium.community", password: "sourabh@s81", name: "Sourabh KT", squad: "81" },
+    { email: "sankamithra.m@kalvium.community", password: "sankamithra@s82", name: "Sankamithra M", squad: "82" },
+    { email: "ashwin.samuel@kalvium.community", password: "ashwin@134", name: "Ashwin Samuel", squad: "134" },
+    { email: "narasimha.s@kalvium.community", password: "narasimha@s61", name: "Narasimha S", squad: "61" },
+  ];
+
+  const handleLogin = (e) => {
     e.preventDefault();
     setError("");
     setMessage("");
 
-    try {
-      const res = await fetch("http://localhost:5000/api/mentor/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+    const mentor = allowedMentors.find(
+      (m) => m.email === email && m.password === password
+    );
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.message || "Login failed");
-        return;
-      }
-
-      localStorage.setItem("mentorToken", data.token);
-      localStorage.setItem("mentorName", data.mentor.name);
-
-      setMessage("Login successful! Redirecting to update page...");
-
-    
-      setTimeout(() => {
-        navigate("/mentor-update");
-      }, 1500);
-    } catch (err) {
-      setError("Server error. Try again later.");
+    if (!mentor) {
+      setError("Invalid email or password.");
+      return;
     }
+
+    // Store mentor info locally
+    localStorage.setItem("mentorToken", "dummy-token");
+    localStorage.setItem("mentorName", mentor.name);
+    localStorage.setItem("mentorSquad", mentor.squad);
+
+    setMessage("Login successful! Redirecting to update page...");
+
+    setTimeout(() => {
+      navigate("/mentor-update");
+    }, 1500);
   };
 
   return (
@@ -51,7 +51,6 @@ const MentorLogin = () => {
           Mentor Login
         </h2>
 
-        
         {message && <p className="text-green-500 text-sm mb-3">{message}</p>}
         {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
 
@@ -98,20 +97,6 @@ const MentorLogin = () => {
             Login
           </button>
         </form>
-
-        <p className="text-center text-sm text-gray-600 mt-6">
-          Don’t have an account?{" "}
-          <button
-            onClick={() => navigate("/mentor-signup")}
-            className="text-red-500 font-medium hover:underline"
-          >
-            Sign up
-          </button>
-        </p>
-
-        <p className="text-center text-sm text-gray-500 mt-4">
-          Made with ❤️ by <span className="text-red-500 font-medium">Kabir Dharshaan</span>
-        </p>
       </div>
     </div>
   );

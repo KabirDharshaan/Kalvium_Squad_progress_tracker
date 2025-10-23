@@ -30,8 +30,13 @@ const StudentLogin = () => {
         return;
       }
 
+      // Extract squad from student email (e.g., john.s81@...)
+      const squadMatch = email.match(/\.s(\d+)\@/i);
+      const squad = squadMatch ? squadMatch[1] : "unknown";
+
       localStorage.setItem("studentToken", data.token);
       localStorage.setItem("studentName", data.student.name);
+      localStorage.setItem("studentSquad", squad);
 
       setMessage("✅ Login successful! Redirecting to dashboard...");
 
@@ -97,6 +102,7 @@ const StudentLogin = () => {
           </button>
         </form>
 
+        {/* Signup navigation */}
         <p className="text-center text-sm text-gray-600 mt-6">
           Don’t have an account?{" "}
           <button
@@ -105,10 +111,6 @@ const StudentLogin = () => {
           >
             Sign up
           </button>
-        </p>
-
-        <p className="text-center text-sm text-gray-500 mt-4">
-          Made with ❤️ by <span className="text-red-500 font-medium">Kabir Dharshaan</span>
         </p>
       </div>
     </div>

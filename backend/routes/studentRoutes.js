@@ -1,28 +1,32 @@
 
+
 const express = require("express");
 const router = express.Router();
 const Student = require("../models/Student");
 const jwt = require("jsonwebtoken");
 
-
 const allowedEmails = [
   ".s81@kalvium.community",
   ".s82@kalvium.community",
   ".s60@kalvium.community",
-  ".s134@kalvium.community",
+  ".s.134@kalvium.community",
 ];
 
 // Signup
 router.post("/signup", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, squadNo } = req.body; // Added squadNo
 
   try {
+    // Check if all required fields are provided
+    if (!name || !email || !password || squadNo === undefined) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
     // Check if email ends with allowed patterns
     const isAllowed = allowedEmails.some((pattern) => email.endsWith(pattern));
     if (!isAllowed) {
       return res.status(400).json({
-        message:
-          "Email not allowed. Use your valid Kalvium community email.",
+        message: "Email not allowed. Use your valid Kalvium community email.",
       });
     }
 
@@ -33,7 +37,7 @@ router.post("/signup", async (req, res) => {
     }
 
     // Create new student
-    const student = new Student({ name, email, password });
+    const student = new Student({ name, email, password, squadNo });
     await student.save();
 
     // Create JWT token
@@ -43,7 +47,7 @@ router.post("/signup", async (req, res) => {
 
     res.status(201).json({
       token,
-      student: { id: student._id, name, email },
+      student: { id: student._id, name, email, squadNo },
     });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
@@ -67,19 +71,16 @@ router.post("/login", async (req, res) => {
       expiresIn: "1d",
     });
 
-    res.json({ token, student: { id: student._id, name: student.name, email } });
+    res.json({
+      token,
+      student: { id: student._id, name: student.name, email, squadNo: student.squadNo },
+    });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
 module.exports = router;
-
-
-
-
-
-
 
 
 

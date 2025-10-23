@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -6,6 +7,7 @@ const beltLevels = ["Purple", "Blue", "Brown", "General"];
 const StudentWork = () => {
   const navigate = useNavigate();
   const studentName = localStorage.getItem("studentName") || "Student";
+  const studentSquad = localStorage.getItem("studentSquad") || "unknown";
 
   const [selectedBelt, setSelectedBelt] = useState("Purple");
   const [questions, setQuestions] = useState({
@@ -16,10 +18,10 @@ const StudentWork = () => {
   });
 
   useEffect(() => {
-    
-    const savedQuestions = localStorage.getItem("beltQuestions");
+    // Load squad-specific questions
+    const savedQuestions = localStorage.getItem(`beltQuestions_squad_${studentSquad}`);
     if (savedQuestions) setQuestions(JSON.parse(savedQuestions));
-  }, []);
+  }, [studentSquad]);
 
   const handleUpdateProgress = () => {
     navigate("/update-work");
@@ -27,7 +29,6 @@ const StudentWork = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-red-50 flex flex-col items-center py-10 px-4 relative">
-     
       <button
         onClick={handleUpdateProgress}
         className="absolute top-6 right-6 bg-red-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-red-600 transition font-medium"
@@ -40,10 +41,9 @@ const StudentWork = () => {
           Welcome, {studentName} 👋
         </h1>
         <p className="text-center text-gray-700 mb-8">
-          Select your belt level to view today’s assigned questions.
+          Your squad: {studentSquad}. Select your belt level to view today’s assigned questions.
         </p>
 
-       
         <div className="flex justify-center gap-4 mb-6 flex-wrap">
           {beltLevels.map((belt) => (
             <button
@@ -83,13 +83,9 @@ const StudentWork = () => {
         </div>
       </div>
 
-      <p className="text-sm text-gray-500 mt-8">
-        Made with ❤️ by{" "}
-        <span className="text-red-500 font-medium">Kabir Dharshaan</span>
-      </p>
+    
     </div>
   );
 };
 
 export default StudentWork;
-

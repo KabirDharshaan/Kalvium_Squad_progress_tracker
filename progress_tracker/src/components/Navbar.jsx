@@ -1,10 +1,8 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Home,
   Users,
-  LayoutDashboard,
   BarChart,
   FileCheck,
   Info,
@@ -18,12 +16,12 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate(); 
 
+  
   const navItems = [
     { name: "Home", icon: <Home size={20} />, path: "/" },
     { name: "Students", icon: <Users size={20} />, path: "/student-dashboard" },
-    { name: "Dashboard", icon: <LayoutDashboard size={20} />, path: "/dashboard" },
     { name: "Statistics", icon: <BarChart size={20} />, path: "/statistics" },
-    { name: "Proof", icon: <FileCheck size={20} />, path: "/proof" },
+    { name: "Proof", icon: <FileCheck size={20} />, path: "/leetcode-dashboard" },
     { name: "About", icon: <Info size={20} />, path: "/about" },
   ];
 

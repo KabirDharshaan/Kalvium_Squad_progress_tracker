@@ -21,3 +21,7 @@ mentorSchema.methods.matchPassword = async function (enteredPassword) {
 };
 
 module.exports = mongoose.model("Mentor", mentorSchema);
+
+
+
+
