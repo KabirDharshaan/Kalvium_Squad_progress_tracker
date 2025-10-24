@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -14,30 +15,34 @@ import kalviumLogo from "../assets/fav.png";
 const Navbar = () => {
   const [active, setActive] = useState("Home");
   const [menuOpen, setMenuOpen] = useState(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
-  
   const navItems = [
     { name: "Home", icon: <Home size={20} />, path: "/" },
     { name: "Students", icon: <Users size={20} />, path: "/student-dashboard" },
-    { name: "Statistics", icon: <BarChart size={20} />, path: "/statistics" },
+    { name: "Statistics", icon: <BarChart size={20} />, path: "/statics" },
     { name: "Proof", icon: <FileCheck size={20} />, path: "/leetcode-dashboard" },
     { name: "About", icon: <Info size={20} />, path: "/about" },
   ];
 
   const handleNavigation = (item) => {
     setActive(item.name);
-    navigate(item.path); 
+    navigate(item.path);
     setMenuOpen(false);
   };
 
   return (
     <nav className="bg-white shadow-md px-6 py-3">
       <div className="flex justify-between items-center">
-        {/* Left - Logo */}
-        <div className="flex items-center space-x-3 cursor-pointer" onClick={() => handleNavigation(navItems[0])}>
+        {/* Left - Logo & Title */}
+        <div
+          className="flex items-center space-x-3 cursor-pointer"
+          onClick={() => handleNavigation(navItems[0])}
+        >
           <img src={kalviumLogo} alt="Kalvium Logo" className="w-10 h-10" />
-          <h1 className="text-xl font-semibold text-gray-800">Kalvium</h1>
+          <h1 className="text-xl font-semibold text-gray-800 tracking-wide">
+            KALVIUM <span className="text-red-500">X</span> KARE
+          </h1>
         </div>
 
         {/* Desktop Menu */}

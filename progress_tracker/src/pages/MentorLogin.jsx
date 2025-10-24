@@ -9,7 +9,7 @@ const MentorLogin = () => {
   const [message, setMessage] = useState(""); 
   const navigate = useNavigate();
 
-  // Hardcoded allowed mentors with squads
+ 
   const allowedMentors = [
     { email: "ajay.balasubramaniam@kalvium.community", password: "ajay@kalvium", name: "Ajay Balasubramaniam" },
     { email: "sourabh.kt@kalvium.community", password: "sourabh@s81", name: "Sourabh KT", squad: "81" },
@@ -29,10 +29,11 @@ const MentorLogin = () => {
 
     if (!mentor) {
       setError("Invalid email or password.");
+
       return;
     }
 
-    // Store mentor info locally
+
     localStorage.setItem("mentorToken", "dummy-token");
     localStorage.setItem("mentorName", mentor.name);
     localStorage.setItem("mentorSquad", mentor.squad);

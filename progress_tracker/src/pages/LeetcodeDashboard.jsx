@@ -4,8 +4,8 @@ import React, { useState } from "react";
 // Sample students data
 const students = [
   { name: "Kabir", leetCodeUsername: "dharshaan_007" },
-  { name: "Ria", leetCodeUsername: "ria123" },
-  { name: "Arjun", leetCodeUsername: "arjun456" },
+  { name: "Sanjai", leetCodeUsername: "sanjaipandian-as" },
+  { name: "kavi", leetCodeUsername: "kaviraja2006" },
 ];
 
 const LeetCodeDashboard = () => {

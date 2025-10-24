@@ -1,6 +1,4 @@
 
-
-
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -17,6 +15,7 @@ import StudentWork from "./pages/StudentWork";
 import UpdateWork from "./pages/UpdateWork";
 import StudentDashboard from "./pages/StudentDashboard"; 
 import LeetCodeDashboard from "./pages/LeetcodeDashboard";
+import Statics from "./pages/Statics";  
 
 function App() {
   return (
@@ -44,6 +43,9 @@ function App() {
 
           {/* LeetCode Dashboard */}
           <Route path="/leetcode-dashboard" element={<LeetCodeDashboard />} />
+
+          {/* ✅ Statistics Dashboard */}
+          <Route path="/statics" element={<Statics />} />
         </Routes>
       </div>
     </Router>

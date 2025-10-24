@@ -30,3 +30,9 @@ const workProgressSchema = new mongoose.Schema(
 
 const WorkProgress = mongoose.model("WorkProgress", workProgressSchema);
 module.exports = WorkProgress;
+
+
+
+
+
+

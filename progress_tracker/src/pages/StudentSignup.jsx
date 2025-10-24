@@ -17,7 +17,7 @@ const StudentSignup = () => {
     setMessage("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/student/signup", {
+      const res = await fetch("https://kalvium-squad-progress-tracker.onrender.com/api/student/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password, squadNo: Number(squadNo) }),
