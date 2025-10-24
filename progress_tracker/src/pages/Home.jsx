@@ -104,8 +104,7 @@ const Home = () => {
         <p className="text-gray-600 mt-1">A service for the Kalvium Community</p>
 
         <div className="flex justify-center items-center gap-2 mt-3 text-gray-700">
-          <span>Made with</span>
-          <Heart size={18} className="text-red-500 fill-red-500 animate-pulse" />
+  
           <span>
             by <span className="font-medium text-gray-800">Kabir Dharshaan</span> | Kalvium
             Progress Tracker

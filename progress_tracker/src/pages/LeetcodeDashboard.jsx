@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 
 // Sample students data
@@ -8,10 +9,11 @@ const students = [
 ];
 
 const LeetCodeDashboard = () => {
-  const [theme, setTheme] = useState("light"); // light or dark
+  // Set default theme to "dark"
+  const [theme, setTheme] = useState("dark");
 
   const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   const handleStudentClick = (username) => {
@@ -21,7 +23,7 @@ const LeetCodeDashboard = () => {
 
   return (
     <div
-      className={`min-h-screen p-6 ${
+      className={`min-h-screen p-6 transition-all duration-300 ${
         theme === "light" ? "bg-white text-black" : "bg-gray-900 text-white"
       }`}
     >
@@ -29,8 +31,10 @@ const LeetCodeDashboard = () => {
         <h1 className="text-2xl font-bold">LeetCode Dashboard</h1>
         <button
           onClick={toggleTheme}
-          className={`px-4 py-2 rounded ${
-            theme === "light" ? "bg-gray-800 text-white" : "bg-white text-black"
+          className={`px-4 py-2 rounded transition-all duration-300 ${
+            theme === "light"
+              ? "bg-gray-800 text-white"
+              : "bg-white text-black"
           }`}
         >
           Toggle Theme

@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +19,7 @@ const StudentWork = () => {
   });
 
   useEffect(() => {
-    // Load squad-specific questions
+    // ✅ Load squad-specific questions (handles both .s81@ and .s.134@)
     const savedQuestions = localStorage.getItem(`beltQuestions_squad_${studentSquad}`);
     if (savedQuestions) setQuestions(JSON.parse(savedQuestions));
   }, [studentSquad]);
@@ -82,8 +83,6 @@ const StudentWork = () => {
           ))}
         </div>
       </div>
-
-    
     </div>
   );
 };

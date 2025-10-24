@@ -1,23 +1,24 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const beltLevels = ["Purple", "Blue", "Brown", "General"];
 
 const MentorUpdate = () => {
   const mentorName = localStorage.getItem("mentorName") || "Mentor";
-  const mentorSquad = localStorage.getItem("mentorSquad") || "unknown";
+  const mentorSquad = localStorage.getItem("mentorSquad") || "unknown"; // ✅ use stored squad
 
-  const [questions, setQuestions] = useState(() => {
-    const saved = localStorage.getItem(`beltQuestions_squad_${mentorSquad}`);
-    return saved
-      ? JSON.parse(saved)
-      : {
-          Purple: Array(5).fill(""),
-          Blue: Array(5).fill(""),
-          Brown: Array(5).fill(""),
-          General: Array(5).fill(""),
-        };
+  // Load questions for this squad from localStorage
+  const [questions, setQuestions] = useState({
+    Purple: Array(5).fill(""),
+    Blue: Array(5).fill(""),
+    Brown: Array(5).fill(""),
+    General: Array(5).fill(""),
   });
+
+  useEffect(() => {
+    const saved = localStorage.getItem(`beltQuestions_squad_${mentorSquad}`);
+    if (saved) setQuestions(JSON.parse(saved));
+  }, [mentorSquad]);
 
   const handleChange = (belt, index, value) => {
     setQuestions((prev) => ({

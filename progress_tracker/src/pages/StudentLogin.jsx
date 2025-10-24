@@ -30,9 +30,12 @@ const StudentLogin = () => {
         return;
       }
 
-      // Extract squad from student email (e.g., john.s81@...)
-      const squadMatch = email.match(/\.s(\d+)\@/i);
-      const squad = squadMatch ? squadMatch[1] : "unknown";
+      // ✅ Updated regex to handle both email formats
+      let squad = "unknown";
+      const match1 = email.match(/\.s(\d+)@/i);       // matches .s81@
+      const match2 = email.match(/\.s\.(\d+)@/i);    // matches .s.134@
+      if (match2) squad = match2[1];
+      else if (match1) squad = match1[1];
 
       localStorage.setItem("studentToken", data.token);
       localStorage.setItem("studentName", data.student.name);
@@ -102,7 +105,6 @@ const StudentLogin = () => {
           </button>
         </form>
 
-        {/* Signup navigation */}
         <p className="text-center text-sm text-gray-600 mt-6">
           Don’t have an account?{" "}
           <button

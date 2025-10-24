@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 const allowedEmails = [
   ".s81@kalvium.community",
   ".s82@kalvium.community",
-  ".s60@kalvium.community",
+  ".s61@kalvium.community",
   ".s.134@kalvium.community",
 ];
 
