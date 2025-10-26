@@ -15,7 +15,7 @@ const StudentDashboard = () => {
     const fetchAllProgress = async () => {
       try {
         setLoading(true);
-        const response = await fetch("https://kalvium-squad-progress-tracker.onrender.com/api/work");
+        const response = await fetch("https://kalvium-squad-progress-tracker-1.onrender.com/api/work");
         if (!response.ok) {
           const text = await response.text();
           console.error("Failed to fetch all progress:", text);
