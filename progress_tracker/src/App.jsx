@@ -14,7 +14,7 @@ import StudentSignup from "./pages/StudentSignup";
 import StudentWork from "./pages/StudentWork";
 import UpdateWork from "./pages/UpdateWork";
 import StudentDashboard from "./pages/StudentDashboard"; 
-import LeetCodeDashboard from "./pages/LeetcodeDashboard";
+import LeetCodeDashboard from "./pages/LeetCodeDashboard";
 import Statics from "./pages/Statics";  
 
 function App() {
